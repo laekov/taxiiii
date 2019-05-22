@@ -2388,8 +2388,8 @@ void read()
 	{
 		//int temp;
 		fscanf(in,"%d %d %d\n",&j,&k,&l);
-		if(RevE==false)G.add_D(j-1,k-1,l);//单向边
-		else G.add(j-1,k-1,l);//双向边
+		if(RevE==false)G.add_D(j,k,l);//单向边
+		else G.add(j,k,l);//双向边
 	}
 	cout<<"correct4"<<endl;
 	fclose(in);
@@ -2665,13 +2665,21 @@ class Global_Scheduling//依托于G_Tree的全局调度算法，主要处理拼�
 		vector<vehicle>cars;
 }scheduling;
 
-void init_all() {
+int init_all() {
 	init();
 	read();
 	Additional_Memory=2*G.n*log2(G.n);
 	printf("G.real_border:%d\n",G.real_node());
-	tree.build();
-	save();
+	FILE* testf(fopen("GP_Tree.data", "r"));
+	if (testf) {
+		fclose(testf);
+		puts("Loading from checkpoint");
+		load();
+	} else {
+		tree.build();
+		save();
+	}
+	return G.n;
 }
 
 int query(int u, int v) {

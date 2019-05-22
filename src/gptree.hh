@@ -3,7 +3,7 @@
 
 namespace gptree {
 
-void init_all();
+int init_all();
 int query(int, int);
 
 };
