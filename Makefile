@@ -1,12 +1,12 @@
 cc=g++
-ccflags=-std=c++11
-libpath=-L/Users/laekov/.local/lib
-objs=bin/gtree.o
+ccflags=-std=c++11 -g
+libpath=-I/home/laekov/.local/include -L/home/laekov/.local/lib
+objs=bin/gtree.o bin/gptree.o
 
 
 all : bin/test
 
-bin/test : src/test.cc bin/gtree.o
+bin/test : src/test.cc $(objs)
 	$(cc) $(ccflags) $< $(objs) -o ./$@ $(libpath) -lmetis
 
 bin/%.o : src/%.cc
@@ -16,4 +16,4 @@ bin :
 	mkdir -p bin
 
 clean : 
-	rm bin/*.a bin/*.o bin/test
+	rm -f bin/*.a bin/*.o bin/test

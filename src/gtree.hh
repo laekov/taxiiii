@@ -9,10 +9,7 @@ typedef struct{
 	int dis;
 }ResultSet;
 
-void init();
-void gtree_load();
-void hierarchy_shortest_path_load();
-void pre_query();
+void init_all();
 std::vector<ResultSet> knn_query(int, int);
 };  // gtree
 

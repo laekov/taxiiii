@@ -24,8 +24,8 @@ long long ts, te;
 #define TIME_TICK_PRINT(T) printf("%s RESULT: %lld (0.01MS)\r\n", (#T), te - ts );
 // ----------
 
-#define FILE_NODE "cal.cnode"
-#define FILE_EDGE "cal.cedge"
+#define FILE_NODE "road.cnode"
+#define FILE_EDGE "road.nedge"
 // set all edge weight to 1(unweighted graph)
 #define ADJWEIGHT_SET_TO_ALL_ONE true
 // we assume edge weight is integer, thus (input edge) * WEIGHT_INFLATE_FACTOR = (our edge weight)
@@ -35,11 +35,11 @@ long long ts, te;
 // gtree leaf node capacity = tau(in paper)
 #define LEAF_CAP 32
 // gtree index disk storage
-#define FILE_NODES_GTREE_PATH "cal.paths"
-#define FILE_GTREE 			  "cal.gtree"
-#define FILE_ONTREE_MIND	  "cal.minds"
+#define FILE_NODES_GTREE_PATH "road.paths"
+#define FILE_GTREE 			  "road.gtree"
+#define FILE_ONTREE_MIND	  "road.minds"
 // input
-#define FILE_OBJECT "cal.object"
+#define FILE_OBJECT "road.object"
 
 typedef struct{
 	double x,y;
@@ -602,6 +602,18 @@ vector<ResultSet> knn_query( int locid, int K ){
 	*/
 
 	return rstset;
+}
+
+void init_all() {
+	init();
+	// load gtree index
+	gtree_load();
+
+	// load distance matrix
+	hierarchy_shortest_path_load();
+
+	// pre query init
+	pre_query();
 }
 
 int main(){
