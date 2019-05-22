@@ -5,6 +5,7 @@
 
 #include "gtree.hh"
 #include "gptree.hh"
+#include "traveler.hh"
 
 
 using namespace std;
@@ -16,6 +17,7 @@ const int max_neighbor = 1000;
 const int num_res = 5;
 const int int_inf = 0x3f3f3f3f;
 const int max_dist = 1e5; // 10km = 1e5dm
+const int batch_expand_size = 1024;
 
 struct Router {
 	int d1, pos, l;
@@ -133,6 +135,7 @@ void init() {
 	n = gptree::init_all();
 	puts("GPTree initialized");
 	readTaxis("car.txt");
+	Traveler::init("road.nedge");
 }
 
 int is_taxi_ok(Taxi& t, int pos, int dest, int d2, int d4, vector<string>& res) {
@@ -175,18 +178,27 @@ int is_taxi_ok(Taxi& t, int pos, int dest, int d2, int d4, vector<string>& res) 
 }
 
 string find(int pos, int dest) {
-	auto cands(gtree::knn_query(pos, max_neighbor));
 	vector<string> res;
 	int d4(gptree::query(pos, dest));
-	for (auto& c : cands) {
-		for (auto& t : taxi_on_node[c.id]) {
-			if (is_taxi_ok(t, pos, dest, c.dis, d4, res)) {
-				if (res.size() > num_res) {
-					break;
+	Traveler::Visitor vis(pos);
+	while (res.size() < num_res) {
+		auto cands(vis.expand(batch_expand_size));
+		for (auto& c : cands) {
+			if (c.dis > max_dist) {
+				break;
+			}
+			for (auto& t : taxi_on_node[c.id]) {
+				if (is_taxi_ok(t, pos, dest, c.dis, d4, res)) {
+					if (res.size() > num_res) {
+						break;
+					}
 				}
 			}
+			if (res.size() > num_res) {
+				break;
+			}
 		}
-		if (res.size() > num_res) {
+		if (cands.rbegin()->dis > max_dist) {
 			break;
 		}
 	}

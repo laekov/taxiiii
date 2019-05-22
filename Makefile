@@ -1,9 +1,9 @@
 cc=g++
 ccflags=-std=c++11 -g
 libpath=-I/home/laekov/.local/include -L/home/laekov/.local/lib
-objs=bin/gtree.o bin/gptree.o
+objs=bin/gtree.o bin/gptree.o bin/traveler.o
 
-default : data/gtree_build
+default : bin/findtaxi data/gtree_build
 
 
 data/gtree_build : src/gtree_build.cpp

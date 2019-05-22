@@ -125,7 +125,8 @@ void init_input(){
 	double weight;
 	int iweight;
 	noe = 0;
-	while( fscanf(fin,"%d %d %d %lf", &eid, &snid, &enid, &weight ) == 4 ){
+	fscanf(fin, "%*d%*d");
+	while( fscanf(fin,"%d %d %lf", &snid, &enid, &weight ) == 3 ){
 		noe ++;
 		iweight = (int) (weight * WEIGHT_INFLATE_FACTOR );
 		Nodes[snid].adjnodes.push_back( enid );
