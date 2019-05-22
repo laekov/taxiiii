@@ -1,6 +1,8 @@
 #include <cstdio>
+#include <ctime>
 #include <vector>
 #include <string>
+#include <iostream>
 #include <sstream>
 
 #include "gtree.hh"
@@ -154,8 +156,7 @@ int is_taxi_ok(Taxi& t, int pos, int dest, int d2, int d4, vector<string>& res) 
 	if (d3 - d4 > max_dist) {
 		return 0;
 	}
-	string res_json;
-	ostringstream sou(res_json);
+	ostringstream sou;
 	sou << "{";
 	sou << "\"taxi_id\":" << t.id << ",";
 	sou << "\"d1\":" << d1 << ",";
@@ -173,7 +174,7 @@ int is_taxi_ok(Taxi& t, int pos, int dest, int d2, int d4, vector<string>& res) 
 	}
 	sou << "]";
 	sou << "}";
-	res.push_back(res_json);
+	res.push_back(sou.str());
 	return 1;
 }
 
@@ -225,5 +226,12 @@ const char* taxiiii_find(int pos, int dest) {
 
 int main() {
 	taxiiii_init();
+	int u, v;
+	while (cin >> u >> v) {
+		clock_t t_b(clock());
+		cout << taxiiii::find(3, 5);
+		clock_t t_e(clock());
+		cout << "Finished in " << t_e - t_b << "us\n";
+	}
 }
 
