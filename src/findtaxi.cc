@@ -140,7 +140,7 @@ void init() {
 	Traveler::init("road.nedge");
 }
 
-int is_taxi_ok(Taxi& t, int pos, int dest, int d2, int d4, vector<string>& res) {
+int isTaxiOk(Taxi& t, int pos, int dest, int d2, int d4, vector<string>& res) {
 	if (t.k == 4) {
 		return 0;
 	}
@@ -189,7 +189,7 @@ string find(int pos, int dest) {
 				break;
 			}
 			for (auto& t : taxi_on_node[c.id]) {
-				if (is_taxi_ok(t, pos, dest, c.dis, d4, res)) {
+				if (isTaxiOk(t, pos, dest, c.dis, d4, res)) {
 					if (res.size() > num_res) {
 						break;
 					}
@@ -229,7 +229,7 @@ int main() {
 	int u, v;
 	while (cin >> u >> v) {
 		clock_t t_b(clock());
-		cout << taxiiii::find(3, 5);
+		cout << taxiiii::find(u, v);
 		clock_t t_e(clock());
 		cout << "Finished in " << t_e - t_b << "us\n";
 	}
