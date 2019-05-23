@@ -1,3 +1,7 @@
+const cursor_red = 'https://laekov.com.cn/l/cursor/red.png';
+const cursor_blue = 'https://laekov.com.cn/l/cursor/blue.png';
+const cursor_green = 'https://laekov.com.cn/l/cursor/green.png';
+
 var map = 0;
 var points = [];
 var selected_pos = 0;
@@ -55,7 +59,7 @@ $(document).ready(function() {
 					marker_user.setMap(null);
 				}
 				marker_user = new AMap.Marker({
-					icon: "//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-red.png",
+					icon: cursor_red,
 					position: points[e.data.name].lnglat,
 					offset: new AMap.Pixel(0, 0)
 				});
@@ -68,7 +72,7 @@ $(document).ready(function() {
 					marker_dest.setMap(null);
 				}
 				marker_dest = new AMap.Marker({
-					icon: "//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-red.png",
+					icon: cursor_blue,
 					position: points[e.data.name].lnglat,
 					offset: new AMap.Pixel(0, 0)
 				});
@@ -83,11 +87,7 @@ $(document).ready(function() {
 
 	$('#show_loc').click(function() {
 		if (path_orig !== 0) {
-			path_orig.setMap(null);
-			path_new.setMap(null);
-			marker_user.setMap(null);
-			marker_dest.setMap(null);
-			marker_taxi.setMap(null);
+			map.clearMap();
 		}
 		if (mass !== 0) {
 			mass.setMap(map);
@@ -98,15 +98,12 @@ $(document).ready(function() {
 		if (mass !== 0) {
 			mass.setMap(null);
 		}
+		map.clearMap();
 	});
 
 	var showTaxi = function(id) {
 		if (path_orig !== 0) {
-			path_orig.setMap(null);
-			path_new.setMap(null);
-			marker_user.setMap(null);
-			marker_dest.setMap(null);
-			marker_taxi.setMap(null);
+			map.clearMap();
 		}
 
 		var lines = [];
@@ -157,27 +154,27 @@ $(document).ready(function() {
 		for (var i = 0; i < t.route_new.length; ++i) {
 			newp.push(points[t.route_new[i]].lnglat);
 		}
-		path_new = createPoly(newp, 4, '#ff3366');
+		path_new = createPoly(newp, 4, '#33ff66');
 		path_new.setMap(map);
 
 		map.setFitView([path_orig, path_new]);
 
 		marker_user = new AMap.Marker({
-			icon: "//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-red.png",
+			icon: cursor_red,
 			position: points[t.user_pos].lnglat,
 			offset: new AMap.Pixel(0, 0)
 		});
 		marker_user.setMap(map);
 
 		marker_dest = new AMap.Marker({
-			icon: "//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-red.png",
+			icon: cursor_blue,
 			position: points[$('#loc_dest').val()].lnglat,
 			offset: new AMap.Pixel(0, 0)
 		});
 		marker_dest.setMap(map);
 
 		marker_taxi = new AMap.Marker({
-			icon: "//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png",
+			icon: cursor_green,
 			position: points[t.taxi_pos].lnglat,
 			offset: new AMap.Pixel(0, 0)
 		});
