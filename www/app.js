@@ -9,6 +9,7 @@ var selected_pos = 0;
 var selected_dest = 0;
 var mass = 0;
 var found_taxis = [];
+var optim_path = 0;
 
 var path_orig = 0;
 var path_new = 0;
@@ -83,6 +84,7 @@ $(document).ready(function() {
 
 		$('#msg').html('Loaded');
 		$('#show_loc').show();
+		$('#find_taxi').show();
 	});
 
 	$('#show_loc').click(function() {
@@ -94,6 +96,8 @@ $(document).ready(function() {
 		}
 	});
 	$('#show_loc').hide();
+	$('#find_taxi').hide();
+
 	$('#hide_loc').click(function() {
 		if (mass !== 0) {
 			mass.setMap(null);
@@ -101,10 +105,29 @@ $(document).ready(function() {
 		map.clearMap();
 	});
 
+	var createPoly = function(path, line, color) {
+		return new AMap.Polyline({
+			path: path,
+			outlineColor: '#ffeeff',
+			borderWeight: 3,
+			strokeColor: color, 
+			strokeOpacity: 1,
+			strokeWeight: line,
+			strokeStyle: "solid",
+			strokeDasharray: [10, 5],
+			lineJoin: 'round',
+			lineCap: 'round',
+			zIndex: 50,
+		});
+	};
+
 	var showTaxi = function(id) {
 		if (path_orig !== 0) {
 			map.clearMap();
 		}
+
+		var opath = createPoly(optim_path, 9, '#cccc00');
+		opath.setMap(map);
 
 		var lines = [];
 		var t = found_taxis[id];
@@ -123,23 +146,7 @@ $(document).ready(function() {
 			}
 			$('#taxi_' + i).find('#taxi_info').html(desc);
 		}
-
-		var createPoly = function(path, line, color) {
-			return new AMap.Polyline({
-				path: path,
-				outlineColor: '#ffeeff',
-				borderWeight: 3,
-				strokeColor: color, 
-				strokeOpacity: 1,
-				strokeWeight: line,
-				strokeStyle: "solid",
-				strokeDasharray: [10, 5],
-				lineJoin: 'round',
-				lineCap: 'round',
-				zIndex: 50,
-			});
-		};
-
+		
 		var origp = [];
 		origp.push(points[t.taxi_pos].lnglat);
 		for (var i = 0; i < t.route_orig.length; ++i) {
@@ -150,7 +157,6 @@ $(document).ready(function() {
 
 		var newp = [];
 		newp.push(points[t.taxi_pos].lnglat);
-		newp.push(points[t.user_pos].lnglat);
 		for (var i = 0; i < t.route_new.length; ++i) {
 			newp.push(points[t.route_new[i]].lnglat);
 		}
@@ -214,7 +220,12 @@ $(document).ready(function() {
 			var time_end = Date.now();
 			found_taxis = [];
 			var res_s = res.split('\n');
-			for (var i = 0; i < res_s.length; ++i) {
+			var optimpos = JSON.parse(res_s[res_s.length - 2]);
+			optim_path = [];
+			for (var i = 0; i < optimpos.length; ++i) {
+				optim_path.push(points[optimpos[i]].lnglat);
+			}
+			for (var i = 1; i < res_s.length - 2; ++i) {
 				try {
 					found_taxis.push(JSON.parse(res_s[i].replace(/,]/g, ']')));
 				} catch (e) {

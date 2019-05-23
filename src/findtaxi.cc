@@ -206,7 +206,8 @@ int isTaxiOk(Taxi& t, int pos, int dest, int d2, int d4, vector<string>& res) {
 string find(int pos, int dest) {
 	vector<string> res;
 	int d4(gptree::query(pos, dest));
-	Traveler::Visitor vis(pos);
+	Traveler::Visitor vis(pos, dest);
+
 	while (res.size() < num_res) {
 		auto cands(vis.expand(batch_expand_size));
 		for (auto& c : cands) {
@@ -228,6 +229,16 @@ string find(int pos, int dest) {
 			break;
 		}
 	}
+
+	auto optim_path(vis.trace());
+	ostringstream sou;
+	sou << "[" << pos;
+	for (auto i : optim_path) {
+		sou << "," << i;
+	}
+	sou << "]";
+	res.push_back(sou.str());
+
 	string out;
 	for (auto i : res) {
 		out += i + "\n";
