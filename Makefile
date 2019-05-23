@@ -22,3 +22,10 @@ bin :
 
 clean : 
 	rm -f bin/*.a bin/*.o bin/*.so
+
+prepare :
+	mkdir -p bin
+	mkdir -p data
+	curl https://laekov.com.cn/l/road.nedge >data/road.nedge
+	curl https://laekov.com.cn/l/road.cnode >data/road.cnode
+
