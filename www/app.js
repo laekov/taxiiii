@@ -215,5 +215,19 @@ $(document).ready(function() {
 			reloadResult();
 		});
 	});
+
+	$('#clear_src').click(function() {
+		$('#loc_src').val('');
+	});
+	$('#clear_dst').click(function() {
+		$('#loc_dest').val('');
+	});
+
+	$('#rand_src').click(function() {
+		$('#loc_src').val(Math.floor(Math.random() * points.length));
+	});
+	$('#rand_dst').click(function() {
+		$('#loc_dest').val(Math.floor(Math.random() * points.length));
+	});
 });
 

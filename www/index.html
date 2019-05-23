@@ -45,9 +45,21 @@ div.part {
 							<p>Taxi</p>
 							<div class='form-group'>
 								<label>Pickup loc</label>
-								<input class='form-control' id='loc_src'/>
+								<div class='input-group'>
+									<input class='form-control' id='loc_src'/>
+									<div class='input-group-append'>
+										<button class='btn btn-secondary' id='clear_src'>C</button>
+										<button class='btn btn-secondary' id='rand_src'>R</button>
+									</div>
+								</div>
 								<label>Dest loc</label>
-								<input class='form-control' id='loc_dest'/>
+								<div class='input-group'>
+									<input class='form-control' id='loc_dest'/>
+									<div class='input-group-append'>
+										<button class='btn btn-secondary' id='clear_dst'>C</button>
+										<button class='btn btn-secondary' id='rand_dst'>R</button>
+									</div>
+								</div>
 								<button class='btn btn-outline-success' id='find_taxi'>Find</button>
 							</div>
 						</div>
