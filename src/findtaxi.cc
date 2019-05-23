@@ -159,6 +159,7 @@ int isTaxiOk(Taxi& t, int pos, int dest, int d2, int d4, vector<string>& res) {
 	ostringstream sou;
 	sou << "{";
 	sou << "\"taxi_id\":" << t.id << ",";
+	sou << "\"k\":" << t.k << ",";
 	sou << "\"taxi_pos\":" << t.pos << ",";
 	sou << "\"user_pos\":" << pos << ",";
 	sou << "\"d1\":" << d1 << ",";
@@ -166,12 +167,26 @@ int isTaxiOk(Taxi& t, int pos, int dest, int d2, int d4, vector<string>& res) {
 	sou << "\"d3\":" << d3 << ",";
 	sou << "\"d4\":" << d4 << ",";
 	sou << "\"route_orig\":[";
+	vector<int> route_orig;
+	int u(t.pos);
 	for (auto i : t.rtr->d1_opt) {
+		auto seg(Traveler::Visitor(u, i).trace());
+		route_orig.insert(route_orig.end(), seg.begin(), seg.end());
+		u = i;
+	}
+	for (auto i : route_orig) {
 		sou << i << ",";
 	}
 	sou << "],";
-	sou << "\"route_new\":[";
+	vector<int> route_new(Traveler::Visitor(t.pos, pos).trace());
+	u = pos;
 	for (auto i : rt) {
+		auto seg(Traveler::Visitor(u, i).trace());
+		route_new.insert(route_new.end(), seg.begin(), seg.end());
+		u = i;
+	}
+	sou << "\"route_new\":[";
+	for (auto i : route_new) {
 		sou << i << ",";
 	}
 	sou << "]";

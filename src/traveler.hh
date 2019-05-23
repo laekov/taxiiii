@@ -14,14 +14,16 @@ using gtree::NodeDist;
 void init(std::string);
 
 struct Visitor {
-	int src; 
-	std::unordered_map<int, int> dist, exp;
+	int src, dest; 
+	std::unordered_map<int, int> dist, exp, from;
 	std::priority_queue<NodeDist> cand;
-	Visitor(int src_) {
+	Visitor(int src_, int dest_=-1) {
 		src = src_;
+		dest = dest_;
 		cand.push(NodeDist(src, 0));
 	}
 	std::vector<NodeDist> expand(int);
+	std::vector<int> trace();
 };
 
 };  // namespace Traveler

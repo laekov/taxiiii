@@ -1,6 +1,7 @@
 #include "traveler.hh"
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 
 using namespace std;
 
@@ -55,14 +56,36 @@ vector<NodeDist> Visitor::expand(int count) {
 			continue;
 		}
 		dist[cur.id] = cur.dis;
+		if (cur.id == dest) {
+			break;
+		}
 		res.push_back(cur);
 		for (Edge* e = edge_head[cur.id]; e; e = e->ne) {
 			if (exp.find(e->to) == exp.end() || cur.dis + e->len < exp[e->to]) {
 				exp[e->to] = cur.dis + e->len;
 				cand.push(NodeDist(e->to, cur.dis + e->len));
+				if (dest != -1) {
+					from[e->to] = cur.id;
+				}
 			}
 		}
 	}
+	return res;
+}
+
+vector<int> Visitor::trace() {
+	vector<int> res;
+	if (dest == -1) {
+		return res;
+	}
+	expand(n);
+	if (from.find(dest) == from.end()) {
+		return res;
+	}
+	for (int u = dest; u != src; u = from[u]) {
+		res.push_back(u);
+	}
+	reverse(res.begin(), res.end());
 	return res;
 }
 

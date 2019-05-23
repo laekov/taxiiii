@@ -82,7 +82,6 @@ $(document).ready(function() {
 
 		$('#msg').html('Loaded');
 		$('#show_loc').show();
-		$('#show_loc').click();
 	});
 
 	$('#show_loc').click(function() {
@@ -108,7 +107,7 @@ $(document).ready(function() {
 
 		var lines = [];
 		var t = found_taxis[id];
-		lines.push('k: ' + t.route_orig.length);
+		lines.push('k: ' + t.k);
 		lines.push('d1: ' + t.d1);
 		lines.push('d2: ' + t.d2);
 		lines.push('d3: ' + t.d3);
@@ -145,7 +144,7 @@ $(document).ready(function() {
 		for (var i = 0; i < t.route_orig.length; ++i) {
 			origp.push(points[t.route_orig[i]].lnglat);
 		}
-		path_orig = createPoly(origp, 7, '#3366ff');
+		path_orig = createPoly(origp, 7, '#33ffff');
 		path_orig.setMap(map);
 
 		var newp = [];
@@ -154,7 +153,7 @@ $(document).ready(function() {
 		for (var i = 0; i < t.route_new.length; ++i) {
 			newp.push(points[t.route_new[i]].lnglat);
 		}
-		path_new = createPoly(newp, 4, '#33ff66');
+		path_new = createPoly(newp, 4, '#ff11ff');
 		path_new.setMap(map);
 
 		map.setFitView([path_orig, path_new]);
