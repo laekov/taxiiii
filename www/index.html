@@ -1,0 +1,79 @@
+<html>
+	<head>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+		<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+		<link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+		<script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+		<script src="/app.js"></script>
+		<title>Taxiiii - laekov</title>
+<style>
+div.main {
+	height: 100%;
+	width: 100%;
+}
+div.title {
+	height: 10%;
+}
+div.part {
+	height: 30%;
+}
+</style>
+	</head>
+
+	<body>
+		<div class='container-fluid main'>
+			<div class='row main'>
+				<div class='col-2 bg-dark text-light'>
+					<div class='row title'>
+						<div class='container'>
+							<p>Taxiiii <br/> <small> laekov </small></p>
+						</div>
+					</div>
+
+					<div class='row'>
+						<div class='container'>
+							<p>Location</p>
+							<div class='form-group'>
+								<button class='btn btn-outline-success' id='show_loc'>Show Loc</button>
+								<button class='btn btn-outline-danger' id='hide_loc'>Hide Loc</button>
+							</div>
+						</div>
+					</div>
+
+					<div class='row part'>
+						<div class='container'>
+							<p>Taxi</p>
+							<div class='form-group'>
+								<label>Pickup loc</label>
+								<input class='form-control' id='loc_src'/>
+								<label>Dest loc</label>
+								<input class='form-control' id='loc_dest'/>
+								<button class='btn btn-outline-success' id='find_taxi'>Find</button>
+							</div>
+						</div>
+					</div>
+
+					<div class='row'>
+						<div class='container'>
+							<p class='alert' role='alert' id='msg'></p>
+							<div class='list-group' id='res_list'>
+							</div>
+							<div style='display: none'>
+								<a href='#' class='list-group-item list-group-item-action' id='sample_cand'>
+									<span id='taxi_id'>
+									<span id='taxi_info'>
+								</a>
+							</div>
+							<p id='taxi_info'>
+							</p>
+						</div>
+					</div>
+
+				</div>
+				<div class='col-10' id='map_container' class='main'>
+				</div>
+				<script src="https://webapi.amap.com/maps?v=1.4.14&key=2e5e4f240869e353dbd2f8a0a6b63a8f"></script>
+			</div>
+		</div>
+	</body>
+</html>

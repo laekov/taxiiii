@@ -18,7 +18,7 @@ namespace taxiiii {
 const int max_neighbor = 1000;
 const int num_res = 5;
 const int int_inf = 0x3f3f3f3f;
-const int max_dist = 1e5; // 10km = 1e5dm
+const int max_dist = 1e4; // 10km = 1e4m
 const int batch_expand_size = 1024;
 
 struct Router {
@@ -159,6 +159,8 @@ int isTaxiOk(Taxi& t, int pos, int dest, int d2, int d4, vector<string>& res) {
 	ostringstream sou;
 	sou << "{";
 	sou << "\"taxi_id\":" << t.id << ",";
+	sou << "\"taxi_pos\":" << t.pos << ",";
+	sou << "\"user_pos\":" << pos << ",";
 	sou << "\"d1\":" << d1 << ",";
 	sou << "\"d2\":" << d2 << ",";
 	sou << "\"d3\":" << d3 << ",";
