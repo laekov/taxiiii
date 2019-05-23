@@ -1,7 +1,7 @@
 cc=g++
 ccflags=-std=c++11 -O3 -fPIC
 libpath=-I/home/laekov/.local/include -L/home/laekov/.local/lib
-objs=bin/gtree.o bin/gptree.o bin/traveler.o
+objs=bin/gptree.o bin/traveler.o
 
 default : bin/libfindtaxi.so
 
