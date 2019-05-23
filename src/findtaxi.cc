@@ -178,6 +178,7 @@ int isTaxiOk(Taxi& t, int pos, int dest, int d2, int d4, vector<string>& res) {
 		sou << i << ",";
 	}
 	sou << "],";
+
 	vector<int> route_new(Traveler::Visitor(t.pos, pos).trace());
 	u = pos;
 	for (auto i : rt) {
@@ -185,8 +186,15 @@ int isTaxiOk(Taxi& t, int pos, int dest, int d2, int d4, vector<string>& res) {
 		route_new.insert(route_new.end(), seg.begin(), seg.end());
 		u = i;
 	}
+
 	sou << "\"route_new\":[";
 	for (auto i : route_new) {
+		sou << i << ",";
+	}
+	sou << "],";
+
+	sou << "\"dests\":[";
+	for (auto i : t.dests) {
 		sou << i << ",";
 	}
 	sou << "]";

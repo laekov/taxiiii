@@ -1,3 +1,4 @@
+const cursor_black = 'https://laekov.com.cn/l/cursor/b2.png';
 const cursor_red = 'https://laekov.com.cn/l/cursor/red.png';
 const cursor_blue = 'https://laekov.com.cn/l/cursor/blue.png';
 const cursor_green = 'https://laekov.com.cn/l/cursor/green.png';
@@ -157,6 +158,15 @@ $(document).ready(function() {
 		path_new.setMap(map);
 
 		map.setFitView([path_orig, path_new]);
+
+		for (var i = 0; i < t.dests.length; ++i) {
+			var marker = new AMap.Marker({
+				icon: cursor_black,
+				position: points[t.dests[i]].lnglat,
+				offset: new AMap.Pixel(0, 0)
+			});
+			marker.setMap(map);
+		}
 
 		marker_user = new AMap.Marker({
 			icon: cursor_red,
