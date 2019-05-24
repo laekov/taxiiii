@@ -28,6 +28,9 @@ def data(filepath):
 @app.route('/query/<pos>/<dst>')
 def query(pos, dst):
     try:
-        return backend.taxiiii_find(int(pos), int(dst)).decode()
-    except:
+        res = backend.taxiiii_find(int(pos), int(dst))
+        res_str = res.decode()
+        return res_str
+    except Exception as e:
+        print(e)
         return '{} to {} causes an error'.format(pos, dst)

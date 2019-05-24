@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <cstring>
 #include <ctime>
 #include <vector>
 #include <string>
@@ -208,6 +209,8 @@ string find(int pos, int dest) {
 	int d4(gptree::query(pos, dest));
 	Traveler::Visitor vis(pos, dest);
 
+	clock_t t_(clock());
+
 	while (res.size() < num_res) {
 		auto cands(vis.expand(batch_expand_size));
 		for (auto& c : cands) {
@@ -230,6 +233,9 @@ string find(int pos, int dest) {
 		}
 	}
 
+	cerr << "Found taxis " << res.size() << " in " << clock() - t_ << " us\n";
+	t_ = clock();
+
 	auto optim_path(vis.trace());
 	ostringstream sou;
 	sou << "[" << pos;
@@ -239,10 +245,14 @@ string find(int pos, int dest) {
 	sou << "]";
 	res.push_back(sou.str());
 
+	cerr << "Found shortest paths in " << clock() - t_ << " us\n";
+
 	string out;
 	for (auto i : res) {
 		out += i + "\n";
 	}
+
+	cerr << "Result size " << out.length() << "\n";
 	return out;
 }
 
@@ -254,8 +264,11 @@ void taxiiii_init() {
 	taxiiii::init();
 }
 
-const char* taxiiii_find(int pos, int dest) {
-	return taxiiii::find(pos, dest).c_str();
+char* taxiiii_find(int pos, int dest) {
+	auto s(taxiiii::find(pos, dest));
+	char* c_ptr = new char[s.length() + 1];
+	memcpy(c_ptr, s.data(), s.length() + 1);
+	return c_ptr;
 }
 
 };
